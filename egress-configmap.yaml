@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: egress-config
+  namespace: default
+data:
+  egress.json: |
+    {
+        "origin": {
+            "address":"3.24.175.37",
+            "host_header": "www.5yearsnow.com.au"
+        }
+    }

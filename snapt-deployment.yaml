@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nova-client
+  labels:
+    app: nova-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nova-client
+  template:
+    metadata:
+      labels:
+        app: nova-client
+    spec:
+      hostAliases: 
+      - ip: "127.0.0.1"
+        hostnames:
+        - "egress"
+      containers:
+      - name: nova-client
+        env:
+        # Section env variables
+        - name: SECTION_PROXY_NAME
+          value: nova-client
+        - name: REDIS_HOST
+          value: 127.0.0.1
+        - name: PROXY_REGO_KEY
+          value: abc
+        - name: LIST_KEY_PREFIX
+          value: abc
+        - name: LIST_KEY_SUFFIX
+          value: abc
+        # End Section env variables
+        - name: NODE_KEY
+          value: "<SNAPT_NODE_KEY>"
+        - name: NODE_ID
+          value: "<SNAPT_NODE_ID>"
+        - name: NODE_HOST
+          value: "poll.nova-adc.com"
+        image: novaadc/nova-client:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1080
+          protocol: TCP
+        - containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            memory: ".5Gi"
+            cpu: "500m"
+          limits:
+            memory: ".5Gi"
+            cpu: "500m"
+      restartPolicy: Always
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
