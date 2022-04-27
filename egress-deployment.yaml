@@ -36,24 +36,6 @@ spec:
               value: abc
             - name: LIST_KEY_SUFFIX
               value: abc
-            - name: SECRET_SAUCE
-              valueFrom:
-                secretKeyRef:
-                  key: secretSauce
-                  name: ben-kei-secrets
-                  optional: true
-            - name: SPECIAL_PROTEIN
-              valueFrom:
-                secretKeyRef:
-                  key: specialProtein
-                  name: ben-kei-secrets
-                  optional: true
-            - name: SUPREME_CHEF
-              valueFrom:
-                secretKeyRef:
-                  key: supremeChef
-                  name: ben-kei-secrets
-                  optional: true
           resources:
             limits:
               cpu: 500m
